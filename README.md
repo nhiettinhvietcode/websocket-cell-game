@@ -1,6 +1,7 @@
 # websocket-cell-game
 Mini local game => AWS
 
+#IP connect WSS in index.html file is Public IP
 
 NGINX reverse proxy:
 
