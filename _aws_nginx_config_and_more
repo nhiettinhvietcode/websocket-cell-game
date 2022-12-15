@@ -1,0 +1,55 @@
+=> Test: node hello.js (https://www.songonha.com/2022/12/how-to-set-up-a-node-js-application-for-production-on-ubuntu-18-04.html)
+=> Video: All success!!! (https://www.songonha.com/2022/12/make-online-game-w-websockets-nodejs-aws.html)
+
+1/ AWS Inbound Config (Add HTTP and HTTPS in Inbound Rule)
+  => Instance => Security => Security Group => Edit Inbound Rule.
+  
+2/ Install NodeJS, PM2
+sudo apt install npm
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+nvm install 14.2
+sudo apt install build-essential
+sudo npm install pm2@latest -g
+      
+3/ Install Nginx
+  ==> Configuration
+  sudo systemctl status nginx => running
+  
+  Edit => sudo nano /etc/nginx/sites-available/165.232.169.244
+  server {
+        listen 80;
+        listen [::]:80;
+
+        root /var/www/165.232.169.244/html;
+        index index.html index.htm index.nginx-debian.html;
+
+        server_name 165.232.169.244;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+   Unnote => Block Transfer
+   sudo nano /etc/nginx/nginx.conf
+  
+   ...
+   http {
+      ...
+      server_names_hash_bucket_size 64;
+      ...
+   }
+   ...
+   
+   
+   Edit line 5 at index.js:
+   port 9091 ==> 3000 (the same with port in location of nginx)
+   If you enable ufw, remember to allow port 3000.
+   
+   node index.js
+   
+   All done!!! Yeah!!!!
