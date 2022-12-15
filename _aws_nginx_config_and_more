@@ -15,15 +15,15 @@ sudo npm install pm2@latest -g
   ==> Configuration
   sudo systemctl status nginx => running
   
-  Edit => sudo nano /etc/nginx/sites-available/165.232.169.244
+  Edit => sudo nano /etc/nginx/sites-available/ip_or_domain
   server {
         listen 80;
         listen [::]:80;
 
-        root /var/www/165.232.169.244/html;
+        root /var/www/ip_or_domain/html;
         index index.html index.htm index.nginx-debian.html;
 
-        server_name 165.232.169.244;
+        server_name ip_or_domain;
 
     location / {
         proxy_pass http://localhost:3000;
